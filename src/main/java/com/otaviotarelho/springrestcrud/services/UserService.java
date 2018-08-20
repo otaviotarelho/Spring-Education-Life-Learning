@@ -6,6 +6,8 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -13,7 +15,23 @@ public class UserService {
     public UserRepository userRepository;
 
     public User findUserById(Integer id){
-        return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(new User(),"User not found"));
+        Optional<User> user = userRepository.findById(id);
+
+        if(user == null){
+            throw new ObjectNotFoundException(new User(), "User not found");
+        }
+
+        return user.get();
+    }
+
+    public User findUserByEmail(String email){
+        User user = userRepository.findByEmail(email);
+
+        if(user == null){
+            throw new ObjectNotFoundException(new User(), "User not found");
+        }
+
+        return user;
     }
 
     public User insert(User obj){

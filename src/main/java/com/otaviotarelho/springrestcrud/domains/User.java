@@ -3,6 +3,7 @@ package com.otaviotarelho.springrestcrud.domains;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class User implements Serializable {
@@ -74,4 +75,19 @@ public class User implements Serializable {
         this.signUpDate = signUpDate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email) &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(email, login, password);
+    }
 }
