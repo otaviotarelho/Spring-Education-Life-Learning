@@ -1,8 +1,8 @@
-package com.otaviotarelho.springrestcrud.domains;
+package edu.otaviotarelho.springrestcrud.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -16,7 +16,7 @@ public class User implements Serializable {
     private String name;
     private String surname;
     private String jobRole;
-    private Date signUpDate;
+    private LocalDate signUpDate;
 
     @Column(unique=true)
     private String email;
@@ -68,10 +68,12 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    public Date getSignUpDate() {
+
+    public LocalDate getSignUpDate() {
         return signUpDate;
     }
-    public void setSignUpDate(Date signUpDate) {
+
+    public void setSignUpDate(LocalDate signUpDate) {
         this.signUpDate = signUpDate;
     }
 
