@@ -4,43 +4,38 @@ import edu.otaviotarelho.springrestcrud.builder.UserBuilder;
 import edu.otaviotarelho.springrestcrud.domain.User;
 import edu.otaviotarelho.springrestcrud.repository.UserRepository;
 import org.hibernate.ObjectNotFoundException;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.Mockito;
 
 import java.util.Optional;
 
-public class UserServiceTest {
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@TestInstance(Lifecycle.PER_CLASS)
+class UserServiceTest {
 
     private UserRepository repository;
     private UserService service;
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
-    @Before
-    public void init(){
+    @BeforeEach
+    void init(){
         repository = Mockito.mock(UserRepository.class);
         service = new UserService();
         service.userRepository = repository;
     }
 
     @Test
-    public void shouldThrowExceptionIfUserNotFoundByEmail(){
+    void shouldThrowExceptionIfUserNotFoundByEmail(){
         User user = UserBuilder.oneUser().builder();
 
         Mockito.when(repository.findByEmail(user.getEmail())).thenThrow(ObjectNotFoundException.class);
 
-        exception.expect(ObjectNotFoundException.class);
-
-        service.findByEmail(user.getEmail());
+        assertThrows(ObjectNotFoundException.class, () -> service.findByEmail(user.getEmail()));
     }
 
     @Test
-    public void shouldReturnUserIfFindUserByEmail(){
+    void shouldReturnUserIfFindUserByEmail(){
         User user = UserBuilder.oneUser().builder();
 
         Mockito.when(repository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
@@ -49,58 +44,30 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldThrowExceptionIfUserNotFoundById(){
+    void shouldThrowExceptionIfUserNotFoundById(){
         User user = UserBuilder.oneUser().builder();
 
         Mockito.when(repository.findById(user.getId())).thenThrow(ObjectNotFoundException.class);
 
-        exception.expect(ObjectNotFoundException.class);
-
-        service.findById(user.getId());
-
+        assertThrows(ObjectNotFoundException.class, () -> service.findById(user.getId()));
     }
 
     @Test
-    public void shouldReturnUserIfFindUserById(){
+    void shouldReturnUserIfFindUserById(){
         User user = UserBuilder.oneUser().builder();
-        Mockito.when(repository.findById(user.getId())).thenReturn(Optional.of(user));
+        Mockito.when(repository.findById(user.getId())).thenReturn(Optional.ofNullable(user));
 
         User userFound = service.findById(user.getId());
 
-        Assert.assertEquals(user, userFound);
+        Assertions.assertEquals(user, userFound);
     }
 
     @Test
-    public void shouldInsertAUser(){
+    void shouldInsertAUser(){
         User user = UserBuilder.oneUser().builder();
 
         Mockito.when(repository.save(user)).thenReturn(user);
         service.insert(user);
-    }
-
-    @Test
-    public void shouldNotInsertUserWithSameLogin(){
-
-    }
-
-    @Test
-    public void shouldNotInsertUserWithAExistingEmail(){
-
-    }
-
-    @Test
-    public void shouldNotUpdateUserIfLoginExistsAndNotTheSameUser(){
-
-    }
-
-    @Test
-    public void shoudlNotUpdateUserIfEmailIsTheSameOfOtherUser(){
-
-    }
-
-    @Test
-    public void shoudlDeleteUser(){
-
     }
 
 }
