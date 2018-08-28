@@ -1,6 +1,7 @@
 package edu.otaviotarelho.springrestcrud.controller;
 
 import edu.otaviotarelho.springrestcrud.domain.User;
+import edu.otaviotarelho.springrestcrud.domain.dto.UserDTO;
 import edu.otaviotarelho.springrestcrud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.noContent;
@@ -59,4 +63,11 @@ public class UserController {
         return noContent().build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> findAll(){
+        Iterable<User> users = service.findAll();
+        List<UserDTO> userDTOS = StreamSupport.stream(users.spliterator(), false).map(obj -> new UserDTO(obj)).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(userDTOS);
+    }
 }

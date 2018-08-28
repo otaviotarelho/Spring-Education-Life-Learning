@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.http.ResponseEntity.status;
 
-@ControllerAdvice
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
