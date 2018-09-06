@@ -1,6 +1,10 @@
 package edu.otaviotarelho.springrestcrud.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -13,17 +17,23 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
+
+    @NotEmpty(message = "Name is required")
+    @Size(min = 3, max = 15, message = "Password should be between 8 and 15 characters")
     private String name;
     private String surname;
     private String jobRole;
     private LocalDate signUpDate;
 
     @Column(unique=true)
+    @Email(message = "Invalid email")
     private String email;
 
     @Column(unique=true)
+    @NotEmpty(message = "Login is required")
     private String login;
 
+    @Size(min = 8, max = 15, message = "Password should be between 8 and 15 characters")
     private String password;
 
     public Integer getId() {

@@ -3,21 +3,17 @@ package edu.otaviotarelho.springrestcrud.domain.dto;
 import edu.otaviotarelho.springrestcrud.domain.User;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class UserDTO implements Serializable {
 
+    private Integer id;
     private String email;
     private String login;
     private String name;
     private String surname;
-
-    public UserDTO(User obj) {
-        this.email = obj.getEmail();
-        this.login = obj.getLogin();
-        this.name = obj.getName();
-        this.surname = obj.getSurname();
-    }
-
+    private String jobRole;
+    private LocalDate signUpDate;
 
     public String getEmail() {
         return email;
@@ -49,5 +45,29 @@ public class UserDTO implements Serializable {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getJobRole() {
+        return jobRole;
+    }
+
+    public void setJobRole(String jobRole) {
+        this.jobRole = jobRole;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public LocalDate getSignUpDate() {
+        return signUpDate;
+    }
+
+    public void setSignUpDate(LocalDate signUpDate) {
+        this.signUpDate = signUpDate;
     }
 }

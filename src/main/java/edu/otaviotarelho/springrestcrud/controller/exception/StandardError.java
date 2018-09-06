@@ -1,4 +1,4 @@
-package edu.otaviotarelho.springrestcrud.exception;
+package edu.otaviotarelho.springrestcrud.controller.exception;
 
 import java.io.Serializable;
 

@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
+    private UserRepository userRepository;
+
     @Autowired
-    public UserRepository userRepository;
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     public User findById(Integer id){
         return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(new User(), "User not found"));
