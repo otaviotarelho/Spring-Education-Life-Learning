@@ -1,7 +1,5 @@
 package edu.otaviotarelho.springrestcrud.domain.dto;
 
-import edu.otaviotarelho.springrestcrud.domain.User;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 

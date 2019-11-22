@@ -1,5 +1,6 @@
 package edu.otaviotarelho.springrestcrud.domain;
 
+import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -14,6 +15,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(notes="User id")
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
@@ -22,6 +24,7 @@ public class User implements Serializable {
     @Size(min = 3, max = 15, message = "Password should be between 8 and 15 characters")
     private String name;
     private String surname;
+    @ApiModelProperty(notes="User job role / permission")
     private String jobRole;
     private LocalDate signUpDate;
 
