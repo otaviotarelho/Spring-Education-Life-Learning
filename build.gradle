@@ -34,7 +34,7 @@ dependencies {
     testCompile 'org.springframework:spring-test:5.0.8.RELEASE'
 }
 
-group = 'com.otaviotarelho'
+group = 'edu.otaviotarelho'
 version = '0.0.1-SNAPSHOT'
 description = 'spring-rest-crud'
 sourceCompatibility = '1.8'
