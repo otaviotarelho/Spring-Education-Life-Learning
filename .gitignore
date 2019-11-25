@@ -27,3 +27,6 @@
 
 ### gradle ###
 /.gradle/
+/build/
+/target/
+spring-rest-crud.iml
