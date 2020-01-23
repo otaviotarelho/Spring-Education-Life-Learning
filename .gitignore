@@ -30,3 +30,5 @@
 /target/
 spring-rest-crud.iml
 /out/
+
+.DS_STORE
