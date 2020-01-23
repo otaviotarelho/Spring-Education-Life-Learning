@@ -1,2 +1,2 @@
-# Spring-Rest-CRUD
+# Spring-Education-Life
 Learning project
