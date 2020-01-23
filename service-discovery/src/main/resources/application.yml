@@ -1,0 +1,13 @@
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+  dashboard:
+    path: /eureka-ui
+
+spring:
+  application:
+    name: service-discovery
+
+server:
+  port: 8761
