@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -31,10 +32,12 @@ import static org.springframework.http.ResponseEntity.ok;
 public class UserController {
 
     private UserService service;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserController(UserService service){
+    public UserController(UserService service, BCryptPasswordEncoder bCryptPasswordEncoder){
         this.service = service;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @ApiOperation(value="List a specific users in the system", response = User.class)
@@ -42,9 +45,11 @@ public class UserController {
             @ApiResponse(code = 200, message = "Successfully retrieved the user")
     })
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> get(@ApiParam(value = "User Id", required = true) @PathVariable("id") Integer id){
+    public ResponseEntity<UserDTO> get(@ApiParam(value = "User Id", required = true) @PathVariable("id") Integer id){
         User user = service.findById(id);
-        return ok().body(user);
+        UserDTO userDTO = new ModelMapper().map(user, UserDTO.class);
+
+        return ok().body(userDTO);
     }
 
     @ApiOperation(value="Insert a user into database", response = UserDTO.class)
@@ -54,6 +59,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDTO> insert(@ApiParam(value = "User object from database", required = true) @Valid @RequestBody User user){
         user.setSignUpDate(LocalDate.now());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
         user = service.insert(user);
 
         URI userUri = ServletUriComponentsBuilder
@@ -101,6 +108,7 @@ public class UserController {
         Iterable<User> users = service.findAll();
 
         Type listType = new TypeToken<List<UserDTO>>() {}.getType();
+
         List<UserDTO> userDTOS = new ModelMapper().map(users, listType);
 
         return ResponseEntity.ok().body(userDTOS);

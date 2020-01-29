@@ -8,6 +8,10 @@ eureka:
 spring:
   application:
     name: service-discovery
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 
 server:
   port: 8761

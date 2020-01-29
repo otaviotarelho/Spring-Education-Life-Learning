@@ -6,3 +6,7 @@ eureka:
 spring:
   application:
     name: service-discovery
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
